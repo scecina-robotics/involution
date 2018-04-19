@@ -12,7 +12,7 @@
 
 #include "main.h"
 #include "trough.c"
-#include "scoop.c"
+
 #include "wheels.c"
 /*
  * Runs the user operator control code. This function will be started in its own task with the

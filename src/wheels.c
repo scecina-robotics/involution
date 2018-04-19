@@ -1,4 +1,5 @@
 
+#include "api.h"
 void LeftWheel(int speed=0){
 motorSet(1,speed);
 motorSet(2,speed);

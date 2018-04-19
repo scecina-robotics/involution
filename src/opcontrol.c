@@ -11,8 +11,9 @@
  */
 
 #include "main.h"
-#include "tough.c"
+#include "trough.c"
 #include "scoop.c"
+#include "wheels.c"
 /*
  * Runs the user operator control code. This function will be started in its own task with the
  * default priority and stack size whenever the robot is enabled via the Field Management System
@@ -30,8 +31,28 @@
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
+
+int LeftStickVert;
+int RightStickVert;
+
 void operatorControl() {
 	while (1) {
+		LeftStickVert=joystickGetAnalog(1, 2);
+		RightStickVert=joystickGetAnalog(2, 2);
+if (LeftStickVert!=0) //If left joystick vertical is not 0
+		{
+			LeftWheels(LeftStickVert);
+		}
+	else
+	 {
+		LeftWheels(0);
+	 }
+	if (RightStickVert!=0) {
 
+		RightWheels(RightStickVert);
+	}
+	else {
+		RightWheels(0);
+	}
 	}
 }

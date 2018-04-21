@@ -11,9 +11,10 @@
  */
 
 #include "main.h"
-#include "trough.c"
+#include "wheels.h"
+#include "trough.h"
+#include "scoop.h"
 
-#include "wheels.c"
 /*
  * Runs the user operator control code. This function will be started in its own task with the
  * default priority and stack size whenever the robot is enabled via the Field Management System
@@ -34,25 +35,71 @@
 
 int LeftStickVert;
 int RightStickVert;
+bool TroughUp;
+bool TroughDown;
+bool ScoopArmUp;
+bool ScoopArmDown;
+bool ScoopGateUp;
+bool ScoopGateDown;
 
 void operatorControl() {
 	while (1) {
 		LeftStickVert=joystickGetAnalog(1, 2);
-		RightStickVert=joystickGetAnalog(2, 2);
-if (LeftStickVert!=0) //If left joystick vertical is not 0
-		{
-			LeftWheels(LeftStickVert);
-		}
-	else
-	 {
-		LeftWheels(0);
-	 }
-	if (RightStickVert!=0) {
+		RightStickVert=joystickGetAnalog(1, 3);
+		TroughUp=joystickGetDigital(1,5,JOY_UP);
+		TroughDown=joystickGetDigital(1,5,JOY_DOWN);
+		ScoopArmUp=joystickGetDigital(1,6,JOY_UP);
+		ScoopArmDown=joystickGetDigital(1,6,JOY_DOWN);
+		ScoopGateUp=joystickGetDigital(1,7,JOY_LEFT);
+		ScoopGateDown=joystickGetDigital(1,8,JOY_RIGHT);
 
-		RightWheels(RightStickVert);
-	}
-	else {
-		RightWheels(0);
-	}
-	}
-}
+		//Base Control
+		//Left Wheels
+    if (LeftStickVert!=0) //If left joystick vertical is not 0
+		  {
+			  LeftWheels(LeftStickVert);
+		  }
+	  else
+		  {
+			  LeftWheels(0);
+		  }
+	 //Right Wheels
+	 if (RightStickVert!=0)
+	   {
+		   RightWheels(RightStickVert);
+		 }
+	 else
+	   {
+			 RightWheels(0);
+		 }
+
+		 //Trough Control
+		 if(TroughUp)
+			 {
+				 troughSet(50);
+			 }else if(TroughDown){
+				 troughSet(-50);
+			 }else{
+				 troughSet(0);
+			 }
+
+		 //Scoop Arm
+		 if(ScoopArmUp){
+			 scoopArmSet(50);
+		 }else if(ScoopArmDown){
+			 scoopArmSet(-50);
+		 }else{
+			 scoopArmSet(0);
+		 }
+
+		 //Scoop Gate/Hugger
+		 if(ScoopGateUp){
+			 scoopGateSet(50);
+		 }else if(ScoopGateDown){
+			 scoopGateSet(-50);
+		 }else{
+			 scoopGateSet(0);
+		 }
+
+	}//End While
+}//End Optcontrol

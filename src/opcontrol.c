@@ -55,51 +55,43 @@ void operatorControl() {
 
 		//Base Control
 		//Left Wheels
-    if (LeftStickVert!=0) //If left joystick vertical is not 0
-		  {
-			  LeftWheels(LeftStickVert);
-		  }
-	  else
-		  {
-			  LeftWheels(0);
-		  }
-	 //Right Wheels
-	 if (RightStickVert!=0)
-	   {
-		   RightWheels(RightStickVert);
-		 }
-	 else
-	   {
-			 RightWheels(0);
-		 }
+    if (LeftStickVert!=0){
+		  LeftWheels(LeftStickVert);
+		}else{
+			LeftWheels(0);
+		}
+	  //Right Wheels
+	  if (RightStickVert!=0){
+		  RightWheels(RightStickVert);
+	  }else{
+	    RightWheels(0);
+	  }
 
-		 //Trough Control
-		 if(TroughUp)
-			 {
-				 troughSet(50);
-			 }else if(TroughDown){
-				 troughSet(-50);
-			 }else{
-				 troughSet(0);
-			 }
+		//Trough Control
+		if(TroughUp){
+		 troughSet(50);
+		}else if(TroughDown){
+		 troughSet(-50);
+		}else{
+		 troughSet(0);
+		}
 
-		 //Scoop Arm
-		 if(ScoopArmUp){
-			 scoopArmSet(50);
-		 }else if(ScoopArmDown){
-			 scoopArmSet(-50);
-		 }else{
-			 scoopArmSet(0);
-		 }
+		//Scoop Arm
+		if(ScoopArmUp){
+		  scoopArmSet(50);
+		}else if(ScoopArmDown){
+		  scoopArmSet(-50);
+		}else{
+		 scoopArmSet(0);
+		}
 
-		 //Scoop Gate/Hugger
-		 if(ScoopGateUp){
-			 scoopGateSet(50);
-		 }else if(ScoopGateDown){
-			 scoopGateSet(-50);
-		 }else{
-			 scoopGateSet(0);
-		 }
-
+		//Scoop Gate/Hugger
+		if(ScoopGateUp){
+		  scoopGateSet(50);
+		}else if(ScoopGateDown){
+		  scoopGateSet(-50);
+		}else{
+		 scoopGateSet(0);
+		}
 	}//End While
 }//End Optcontrol

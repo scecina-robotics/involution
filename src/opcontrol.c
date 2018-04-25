@@ -41,6 +41,14 @@ bool ScoopArmUp;
 bool ScoopArmDown;
 bool ScoopGateUp;
 bool ScoopGateDown;
+//Partner Contoller
+bool PartTroughUp;
+bool PartTroughDown;
+bool PartScoopArmUp;
+bool PartScoopArmDown;
+bool PartScoopGateUp;
+bool PartScoopGateDown;
+
 
 void operatorControl() {
 	while (1) {
@@ -52,6 +60,13 @@ void operatorControl() {
 		ScoopArmDown=joystickGetDigital(1,6,JOY_DOWN);
 		ScoopGateUp=joystickGetDigital(1,7,JOY_LEFT);
 		ScoopGateDown=joystickGetDigital(1,8,JOY_RIGHT);
+		//Partner Controller
+		PartTroughUp=joystickGetDigital(2,5,JOY_UP);
+		PartTroughDown=joystickGetDigital(2,5,JOY_DOWN);
+		PartScoopArmUp=joystickGetDigital(2,6,JOY_UP);
+		PartScoopArmDown=joystickGetDigital(2,6,JOY_DOWN);
+		PartScoopGateUp=joystickGetDigital(2,7,JOY_LEFT);
+		PartScoopGateDown=joystickGetDigital(2,8,JOY_RIGHT);
 
 		//Base Control
 		//Left Wheels
@@ -68,27 +83,27 @@ void operatorControl() {
 	  }
 
 		//Trough Control
-		if(TroughUp){
-		 troughSet(50);
-		}else if(TroughDown){
-		 troughSet(-50);
+		if(TroughUp || PartTroughUp){
+		  troughSet(50);
+	 }else if(TroughDown || PartTroughDown){
+		  troughSet(-50);
 		}else{
-		 troughSet(0);
+		  troughSet(0);
 		}
 
 		//Scoop Arm
-		if(ScoopArmUp){
+		if(ScoopArmUp || PartScoopArmUp){
 		  scoopArmSet(50);
-		}else if(ScoopArmDown){
+		}else if(ScoopArmDown || PartScoopArmDown){
 		  scoopArmSet(-50);
 		}else{
 		 scoopArmSet(0);
 		}
 
 		//Scoop Gate/Hugger
-		if(ScoopGateUp){
+		if(ScoopGateUp || PartScoopGateUp){
 		  scoopGateSet(50);
-		}else if(ScoopGateDown){
+		}else if(ScoopGateDown || PartScoopGateDown){
 		  scoopGateSet(-50);
 		}else{
 		 scoopGateSet(0);

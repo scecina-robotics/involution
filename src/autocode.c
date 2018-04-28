@@ -8,6 +8,10 @@
 
 void autocode(){
   // this should turn it 90 degrees
+  scoopArmSet(MtrSpeed());
+  delay(700);
+  scoopArmSet(0);
+
   LeftWheels(-MtrSpeed());
   RightWheels(MtrSpeed());
 
@@ -16,9 +20,12 @@ void autocode(){
   LeftWheels(MtrSpeed());
   RightWheels(MtrSpeed());
 
-  delay (5000);
+  delay (8000);
 
   LeftWheels(0);
   RightWheels(0);
+
+  LeftWheels(MtrSpeed());
+  RightWheels(-MtrSpeed());
 
 }

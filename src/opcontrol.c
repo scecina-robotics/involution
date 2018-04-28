@@ -14,7 +14,7 @@
 #include "wheels.h"
 #include "trough.h"
 #include "scoop.h"
-
+#include "autocode.h"
 /*
  * Runs the user operator control code. This function will be started in its own task with the
  * default priority and stack size whenever the robot is enabled via the Field Management System
@@ -39,18 +39,24 @@ bool TroughUp;
 bool TroughDown;
 bool ScoopArmUp;
 bool ScoopArmDown;
-bool ScoopGateUp;
-bool ScoopGateDown;
+bool ScoopGateUpLeft;
+bool ScoopGateDownLeft;
+bool ScoopGateUpRight;
+bool ScoopGateDownRight;
 //Partner Contoller
 bool PartTroughUp;
 bool PartTroughDown;
 bool PartScoopArmUp;
 bool PartScoopArmDown;
-bool PartScoopGateUp;
-bool PartScoopGateDown;
+bool PartScoopGateUpLeft;
+bool PartScoopGateDownLeft;
+bool PartScoopGateDownRight;
+bool PartScoopGateUpRight;
 
+bool AutoCodeExecuted;
 
 void operatorControl() {
+	AutoCodeExecuted=false;
 	while (1) {
 		LeftStickVert=joystickGetAnalog(1, 2);
 		RightStickVert=joystickGetAnalog(1, 3);
@@ -58,18 +64,30 @@ void operatorControl() {
 		TroughDown=joystickGetDigital(1,5,JOY_DOWN);
 		ScoopArmUp=joystickGetDigital(1,6,JOY_UP);
 		ScoopArmDown=joystickGetDigital(1,6,JOY_DOWN);
-		ScoopGateUp=joystickGetDigital(1,7,JOY_LEFT);
-		ScoopGateDown=joystickGetDigital(1,8,JOY_RIGHT);
+		ScoopGateUpLeft=joystickGetDigital(1,7,JOY_LEFT);
+		ScoopGateDownLeft=joystickGetDigital(1,7,JOY_RIGHT);
+		ScoopGateUpRight=joystickGetDigital(1,8,JOY_RIGHT);
+		ScoopGateDownRight=joystickGetDigital(1,8,JOY_LEFT);
 		//Partner Controller
 		PartTroughUp=joystickGetDigital(2,5,JOY_UP);
 		PartTroughDown=joystickGetDigital(2,5,JOY_DOWN);
 		PartScoopArmUp=joystickGetDigital(2,6,JOY_UP);
 		PartScoopArmDown=joystickGetDigital(2,6,JOY_DOWN);
-		PartScoopGateUp=joystickGetDigital(2,7,JOY_LEFT);
-		PartScoopGateDown=joystickGetDigital(2,8,JOY_RIGHT);
-
+		PartScoopGateUpLeft=joystickGetDigital(2,7,JOY_LEFT);
+		PartScoopGateUpRight=joystickGetDigital(2,8,JOY_LEFT);
+		PartScoopGateDownLeft=joystickGetDigital(2,7,JOY_RIGHT);
+		PartScoopGateDownRight=joystickGetDigital(2,8,JOY_RIGHT);
 		//Base Control
 		//Left Wheels
+		if ((joystickGetDigital(1,8,JOY_DOWN)==1)&&(joystickGetDigital(1,7,JOY_DOWN)==1)){// Must be initiated on primary controller
+			if (AutoCodeExecuted==true){
+
+			}
+			else {
+				//AutoCodeExecuted=true;
+				autocode();
+			}
+		}
     if (LeftStickVert!=0){
 		  LeftWheels(LeftStickVert);
 		}else{
@@ -101,12 +119,19 @@ void operatorControl() {
 		}
 
 		//Scoop Gate/Hugger
-		if(ScoopGateUp || PartScoopGateUp){
-		  scoopGateSet(50);
-		}else if(ScoopGateDown || PartScoopGateDown){
-		  scoopGateSet(-50);
+		if(ScoopGateUpLeft || PartScoopGateUpLeft){
+		  scoopGateSetLeft(50);
+		}else if(ScoopGateDownLeft || PartScoopGateDownLeft){
+		  scoopGateSetLeft(-50);
 		}else{
-		 scoopGateSet(0);
+		 scoopGateSetLeft(0);
+		}
+		if(ScoopGateUpRight || PartScoopGateUpRight){
+		  scoopGateSetRight(50);
+		}else if(ScoopGateDownRight || PartScoopGateDownRight){
+		  scoopGateSetRight(-50);
+		}else{
+		 scoopGateSetRight(0);
 		}
 	}//End While
 }//End Optcontrol

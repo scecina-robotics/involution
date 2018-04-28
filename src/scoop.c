@@ -6,7 +6,10 @@ void scoopArmSet(int speed){
   motorSet(7,-speed);
 }
 
-void scoopGateSet(int speed){
-  motorSet(8, speed);
+void scoopGateSetRight(int speed){
   motorSet(9,-speed);
+}
+
+void scoopGateSetLeft(int speed) {
+  motorSet(8, speed);
 }
